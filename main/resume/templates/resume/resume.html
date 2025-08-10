@@ -1,0 +1,114 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+<!-- Page Content-->
+<div class="container px-5 my-5">
+    <div class="text-center mb-5">
+        <h1 class="display-5 fw-bolder mb-0"><span class="text-gradient d-inline">Resume</span></h1>
+    </div>
+    <div class="row gx-5 justify-content-center">
+        <div class="col-lg-11 col-xl-9 col-xxl-8">
+            <!-- Experience Section-->
+            <section>
+                <div class="d-flex align-items-center justify-content-between mb-4">
+                    <h2 class="text-primary fw-bolder mb-0">Experience</h2>
+                </div>
+                
+                <!-- Experience Cards - Dynamic from database -->
+                {% for experience in experiences %}
+                <div class="card shadow border-0 rounded-4 mb-5">
+                    <div class="card-body p-5">
+                        <div class="row align-items-center gx-5">
+                            <div class="col text-center text-lg-start mb-4 mb-lg-0">
+                                <div class="bg-light p-4 rounded-4">
+                                    <div class="text-primary fw-bolder mb-2">{{ experience.get_period }}</div>
+                                    <div class="small fw-bolder">{{ experience.position }}</div>
+                                    <div class="small text-muted">{{ experience.company }}</div>
+                                    <div class="small text-muted">{{ experience.location }}</div>
+                                </div>
+                            </div>
+                            <div class="col-lg-8">
+                                <div>{{ experience.description }}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% empty %}
+                <div class="text-center text-muted">
+                    <p>Nessuna esperienza disponibile</p>
+                </div>
+                {% endfor %}
+            </section>
+            
+            <!-- Education Section-->
+            <section>
+                <h2 class="text-secondary fw-bolder mb-4">Education</h2>
+                
+                <!-- Education Cards - Dynamic from database -->
+                {% for education in educations %}
+                <div class="card shadow border-0 rounded-4 mb-5">
+                    <div class="card-body p-5">
+                        <div class="row align-items-center gx-5">
+                            <div class="col text-center text-lg-start mb-4 mb-lg-0">
+                                <div class="bg-light p-4 rounded-4">
+                                    <div class="text-secondary fw-bolder mb-2">{{ education.get_period }}</div>
+                                    <div class="mb-2">
+                                        <div class="small fw-bolder">{{ education.institution }}</div>
+                                        <div class="small text-muted">{{ education.location }}</div>
+                                    </div>
+                                    <div class="small text-muted">{{ education.degree }}</div>
+                                </div>
+                            </div>
+                            <div class="col-lg-8">
+                                <div>{{ education.description }}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% empty %}
+                <div class="text-center text-muted">
+                    <p>Nessuna formazione disponibile</p>
+                </div>
+                {% endfor %}
+            </section>
+            
+            <!-- Skills Section-->
+            <section>
+                <h2 class="text-primary fw-bolder mb-4">Professional Skills</h2>
+                <!-- Skillset Card-->
+                <div class="card shadow border-0 rounded-4 mb-5">
+                    <div class="card-body p-5">
+                        <!-- Professional skills list - Dynamic from database -->
+                        {% if skills_by_category %}
+                        <div class="row">
+                            {% for category, skills in skills_by_category.items %}
+                            <div class="col-6">
+                                {% for skill in skills %}
+                                <div class="d-flex align-items-center mb-4">
+                                    <div class="feature bg-primary bg-gradient-primary-to-secondary text-white rounded-3 me-3">
+                                        <i class="bi {{ skill.get_icon }}"></i>
+                                    </div>
+                                    <div class="feature-title">
+                                        <h6 class="fw-bolder mb-0"><span class="text-gradient d-inline">{{ skill.name }}</span></h6>
+                                        <p class="text-muted">{{ skill.description|default:skill.get_proficiency_display }}</p>
+                                    </div>
+                                </div>
+                                {% endfor %}
+                            </div>
+                            {% endfor %}
+                        </div>
+                        {% else %}
+                        <div class="text-center text-muted">
+                            <p>Nessuna competenza disponibile</p>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+</div>
+{% endblock %} 

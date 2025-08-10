@@ -1,0 +1,179 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+<!-- Page Content-->
+<div class="container px-5 my-5">
+    <div class="text-center mb-5">
+        <h1 class="display-5 fw-bolder mb-0"><span class="text-gradient d-inline">Resume</span></h1>
+    </div>
+    <div class="row gx-5 justify-content-center">
+        <div class="col-lg-11 col-xl-9 col-xxl-8">
+            <!-- Experience Section-->
+            <section>
+                <div class="d-flex align-items-center justify-content-between mb-4">
+                    <h2 class="text-primary fw-bolder mb-0">Experience</h2>
+                    <!-- Download resume button-->
+                    <!-- Note: Set the link href target to a PDF file within your project-->
+                    <a class="btn btn-primary px-4 py-3" href="#!">
+                        <div class="d-inline-block bi bi-download me-2"></div>
+                        Download Resume
+                    </a>
+                </div>
+                <!-- Experience Card 1-->
+                <div class="card shadow border-0 rounded-4 mb-5">
+                    <div class="card-body p-5">
+                        <div class="row align-items-center gx-5">
+                            <div class="col text-center text-lg-start mb-4 mb-lg-0">
+                                <div class="bg-light p-4 rounded-4">
+                                    <div class="text-primary fw-bolder mb-2">2020 - 2023</div>
+                                    <div class="small fw-bolder">Ingegnere Elettronico Senior</div>
+                                    <div class="small text-muted">TechCorp Italia</div>
+                                    <div class="small text-muted">Milano, Italia</div>
+                                </div>
+                            </div>
+                            <div class="col-lg-8">
+                                <div>Sviluppo di sistemi embedded per automazione industriale. Progettazione di circuiti di controllo per macchine industriali e implementazione di soluzioni IoT per il monitoraggio remoto.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Experience Card 2-->
+                <div class="card shadow border-0 rounded-4 mb-5">
+                    <div class="card-body p-5">
+                        <div class="row align-items-center gx-5">
+                            <div class="col text-center text-lg-start mb-4 mb-lg-0">
+                                <div class="bg-light p-4 rounded-4">
+                                    <div class="text-primary fw-bolder mb-2">2018 - 2020</div>
+                                    <div class="small fw-bolder">Ingegnere Elettronico</div>
+                                    <div class="small text-muted">Automazione Roma</div>
+                                    <div class="small text-muted">Roma, Italia</div>
+                                </div>
+                            </div>
+                            <div class="col-lg-8">
+                                <div>Progettazione di circuiti di controllo per macchine industriali. Sviluppo di sistemi di automazione per linee di produzione e implementazione di protocolli di comunicazione industriali.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Experience Card 3-->
+                <div class="card shadow border-0 rounded-4 mb-5">
+                    <div class="card-body p-5">
+                        <div class="row align-items-center gx-5">
+                            <div class="col text-center text-lg-start mb-4 mb-lg-0">
+                                <div class="bg-light p-4 rounded-4">
+                                    <div class="text-primary fw-bolder mb-2">2016 - 2018</div>
+                                    <div class="small fw-bolder">Tecnico Elettronico</div>
+                                    <div class="small text-muted">Elettronica Milano</div>
+                                    <div class="small text-muted">Milano, Italia</div>
+                                </div>
+                            </div>
+                            <div class="col-lg-8">
+                                <div>Manutenzione e riparazione di sistemi elettronici. Diagnostica di problemi hardware e software, sostituzione componenti e calibrazione di strumenti di misura.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!-- Education Section-->
+            <section>
+                <h2 class="text-secondary fw-bolder mb-4">Education</h2>
+                <!-- Education Card 1-->
+                <div class="card shadow border-0 rounded-4 mb-5">
+                    <div class="card-body p-5">
+                        <div class="row align-items-center gx-5">
+                            <div class="col text-center text-lg-start mb-4 mb-lg-0">
+                                <div class="bg-light p-4 rounded-4">
+                                    <div class="text-secondary fw-bolder mb-2">2014 - 2016</div>
+                                    <div class="mb-2">
+                                        <div class="small fw-bolder">Politecnico di Milano</div>
+                                        <div class="small text-muted">Milano, Italia</div>
+                                    </div>
+                                    <div class="small text-muted">Laurea Magistrale in Ingegneria Elettronica</div>
+                                </div>
+                            </div>
+                            <div class="col-lg-8">
+                                <div>Specializzazione in sistemi embedded e microelettronica. Tesi di laurea su "Sviluppo di sistemi di controllo per automazione industriale".</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Education Card 2-->
+                <div class="card shadow border-0 rounded-4 mb-5">
+                    <div class="card-body p-5">
+                        <div class="row align-items-center gx-5">
+                            <div class="col text-center text-lg-start mb-4 mb-lg-0">
+                                <div class="bg-light p-4 rounded-4">
+                                    <div class="text-secondary fw-bolder mb-2">2011 - 2014</div>
+                                    <div class="mb-2">
+                                        <div class="small fw-bolder">Università di Roma</div>
+                                        <div class="small text-muted">Roma, Italia</div>
+                                    </div>
+                                    <div class="small text-muted">Laurea Triennale in Ingegneria Elettronica</div>
+                                </div>
+                            </div>
+                            <div class="col-lg-8">
+                                <div>Formazione di base in elettronica, fisica e matematica. Progetti di laboratorio su circuiti analogici e digitali.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!-- Skills Section-->
+            <section>
+                <h2 class="text-primary fw-bolder mb-4">Professional Skills</h2>
+                <!-- Skillset Card-->
+                <div class="card shadow border-0 rounded-4 mb-5">
+                    <div class="card-body p-5">
+                        <!-- Professional skills list-->
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="d-flex align-items-center mb-4">
+                                    <div class="feature bg-primary bg-gradient-primary-to-secondary text-white rounded-3 me-3">
+                                        <i class="bi bi-tools"></i>
+                                    </div>
+                                    <div class="feature-title">
+                                        <h6 class="fw-bolder mb-0"><span class="text-gradient d-inline">Linguaggi di Programmazione</span></h6>
+                                        <p class="text-muted">C, C++, Python, VHDL</p>
+                                    </div>
+                                </div>
+                                <div class="d-flex align-items-center mb-4">
+                                    <div class="feature bg-primary bg-gradient-primary-to-secondary text-white rounded-3 me-3">
+                                        <i class="bi bi-cpu"></i>
+                                    </div>
+                                    <div class="feature-title">
+                                        <h6 class="fw-bolder mb-0"><span class="text-gradient d-inline">Microcontrollori</span></h6>
+                                        <p class="text-muted">Arduino, STM32, PIC</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="d-flex align-items-center mb-4">
+                                    <div class="feature bg-primary bg-gradient-primary-to-secondary text-white rounded-3 me-3">
+                                        <i class="bi bi-wifi"></i>
+                                    </div>
+                                    <div class="feature-title">
+                                        <h6 class="fw-bolder mb-0"><span class="text-gradient d-inline">Protocolli di Comunicazione</span></h6>
+                                        <p class="text-muted">I2C, SPI, UART, CAN</p>
+                                    </div>
+                                </div>
+                                <div class="d-flex align-items-center mb-4">
+                                    <div class="feature bg-primary bg-gradient-primary-to-secondary text-white rounded-3 me-3">
+                                        <i class="bi bi-globe"></i>
+                                    </div>
+                                    <div class="feature-title">
+                                        <h6 class="fw-bolder mb-0"><span class="text-gradient d-inline">Lingue</span></h6>
+                                        <p class="text-muted">Italiano (nativo), Inglese (fluente), Spagnolo (intermedio)</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+</div>
+{% endblock %} 

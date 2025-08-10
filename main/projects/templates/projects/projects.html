@@ -1,0 +1,263 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+<!-- Page Content-->
+<div class="container px-5 my-5">
+    <div class="text-center mb-5">
+        <h1 class="display-5 fw-bolder mb-0"><span class="text-gradient d-inline">Projects</span></h1>
+        <p class="lead text-muted">Progetti di ingegneria elettronica e sistemi embedded</p>
+    </div>
+    
+    <!-- Estadísticas -->
+    {% if stats %}
+    <div class="row justify-content-center mb-4">
+        <div class="col-lg-8">
+            <div class="text-center">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="feature bg-primary bg-gradient-primary-to-secondary text-white rounded-3 mb-3 mx-auto" style="width: 3rem; height: 3rem;">
+                            <i class="bi bi-folder"></i>
+                        </div>
+                        <h6 class="fw-bolder">{{ stats.total_projects }}</h6>
+                        <small class="text-muted">Progetti Totali</small>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="feature bg-warning bg-gradient text-white rounded-3 mb-3 mx-auto" style="width: 3rem; height: 3rem;">
+                            <i class="bi bi-star"></i>
+                        </div>
+                        <h6 class="fw-bolder">{{ stats.featured_projects }}</h6>
+                        <small class="text-muted">In Evidenza</small>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="feature bg-secondary bg-gradient text-white rounded-3 mb-3 mx-auto" style="width: 3rem; height: 3rem;">
+                            <i class="bi bi-collection"></i>
+                        </div>
+                        <h6 class="fw-bolder">{{ stats.categories_count }}</h6>
+                        <small class="text-muted">Categorie</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+    
+    <!-- Búsqueda y filtros -->
+    <div class="row justify-content-center mb-5">
+        <div class="col-lg-10">
+            <div class="card border-0 shadow-sm">
+                <div class="card-body">
+                    <!-- Búsqueda -->
+                    <form method="get" class="mb-3">
+                        <div class="input-group">
+                            <input type="text" name="search" class="form-control" placeholder="Cerca progetti..." 
+                                   value="{{ search_query|default:'' }}">
+                            <button class="btn btn-primary" type="submit">
+                                <i class="bi bi-search"></i>
+                            </button>
+                        </div>
+                    </form>
+                    
+                    <!-- Filtros y ordenamiento -->
+                    <div class="row">
+                        <div class="col-md-8">
+                            <div class="btn-group" role="group">
+                                <a href="{% url 'projects:projects' %}{% if search_query %}?search={{ search_query }}{% endif %}" 
+                                   class="btn btn-outline-primary {% if not request.GET.category %}active{% endif %}">
+                                    Tutti i Progetti
+                                </a>
+                                {% for category in categories %}
+                                <a href="{% url 'projects:projects' %}?category={{ category.id }}{% if search_query %}&search={{ search_query }}{% endif %}" 
+                                   class="btn btn-outline-primary {% if request.GET.category == category.id|stringformat:'s' %}active{% endif %}">
+                                    {{ category.name }}
+                                </a>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <select class="form-select" onchange="window.location.href=this.value">
+                                <option value="{% url 'projects:projects' %}{% if request.GET.category %}?category={{ request.GET.category }}{% endif %}{% if search_query %}{% if request.GET.category %}&{% else %}?{% endif %}search={{ search_query }}{% endif %}&sort=created_at" 
+                                        {% if sort_by == 'created_at' %}selected{% endif %}>
+                                    Più Recenti
+                                </option>
+                                <option value="{% url 'projects:projects' %}{% if request.GET.category %}?category={{ request.GET.category }}{% endif %}{% if search_query %}{% if request.GET.category %}&{% else %}?{% endif %}search={{ search_query }}{% endif %}&sort=featured" 
+                                        {% if sort_by == 'featured' %}selected{% endif %}>
+                                    In Evidenza
+                                </option>
+                                <option value="{% url 'projects:projects' %}{% if request.GET.category %}?category={{ request.GET.category }}{% endif %}{% if search_query %}{% if request.GET.category %}&{% else %}?{% endif %}search={{ search_query }}{% endif %}&sort=title" 
+                                        {% if sort_by == 'title' %}selected{% endif %}>
+                                    Ordine Alfabetico
+                                </option>
+                                <option value="{% url 'projects:projects' %}{% if request.GET.category %}?category={{ request.GET.category }}{% endif %}{% if search_query %}{% if request.GET.category %}&{% else %}?{% endif %}search={{ search_query }}{% endif %}&sort=category" 
+                                        {% if sort_by == 'category' %}selected{% endif %}>
+                                    Per Categoria
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="row gx-5 justify-content-center">
+        <div class="col-lg-11 col-xl-9 col-xxl-8">
+            <!-- Proyectos destacados primero -->
+            {% for project in projects %}
+            {% if project.is_featured %}
+            <div class="card overflow-hidden shadow rounded-4 border-0 mb-5 border-warning">
+                <div class="card-body p-0">
+                    <div class="d-flex align-items-center">
+                        <div class="p-5">
+                            <div class="d-flex align-items-center mb-2">
+                                <h4 class="fw-bolder mb-0">{{ project.title }}</h4>
+                                <span class="badge bg-warning ms-2">⭐ In Evidenza</span>
+                            </div>
+                            <p class="lead">{{ project.description }}</p>
+                            <div class="mb-3">
+                                <span class="badge bg-secondary me-2">{{ project.category.name }}</span>
+                                <small class="text-muted">
+                                    <i class="bi bi-calendar me-1"></i>{{ project.created_at|date:"M Y" }}
+                                </small>
+                            </div>
+                            <div class="mb-3">
+                                <h6 class="fw-bolder text-primary">Tecnologie:</h6>
+                                <p class="text-muted">{{ project.technologies }}</p>
+                            </div>
+                        </div>
+                        <div class="bg-gradient-primary-to-secondary px-4 py-5">
+                            <div class="d-flex align-items-center justify-content-center h-100">
+                                <div class="text-white text-center">
+                                    {% if project.url %}
+                                    <a href="{{ project.url }}" class="btn btn-outline-light btn-sm me-2 mb-2" target="_blank">
+                                        <i class="bi bi-link-45deg me-1"></i>Demo
+                                    </a>
+                                    {% endif %}
+                                    {% if project.github_url %}
+                                    <a href="{{ project.github_url }}" class="btn btn-outline-light btn-sm me-2 mb-2" target="_blank">
+                                        <i class="bi bi-github me-1"></i>GitHub
+                                    </a>
+                                    {% endif %}
+                                    <a href="{% url 'projects:project_detail' project.slug %}" class="btn btn-outline-light btn-sm">
+                                        <i class="bi bi-eye me-1"></i>Dettagli
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+            {% endfor %}
+            
+            <!-- Resto de proyectos -->
+            {% for project in projects %}
+            {% if not project.is_featured %}
+            <div class="card overflow-hidden shadow rounded-4 border-0 mb-5">
+                <div class="card-body p-0">
+                    <div class="d-flex align-items-center">
+                        <div class="p-5">
+                            <h4 class="fw-bolder">{{ project.title }}</h4>
+                            <p>{{ project.description }}</p>
+                            <div class="mb-3">
+                                <span class="badge bg-secondary me-2">{{ project.category.name }}</span>
+                                <small class="text-muted">
+                                    <i class="bi bi-calendar me-1"></i>{{ project.created_at|date:"M Y" }}
+                                </small>
+                            </div>
+                            <div class="mb-3">
+                                <h6 class="fw-bolder text-primary">Tecnologie:</h6>
+                                <p class="text-muted">{{ project.technologies }}</p>
+                            </div>
+                        </div>
+                        <div class="bg-gradient-primary-to-secondary px-4 py-5">
+                            <div class="d-flex align-items-center justify-content-center h-100">
+                                <div class="text-white">
+                                    {% if project.url %}
+                                    <a href="{{ project.url }}" class="btn btn-outline-light btn-sm me-2" target="_blank">
+                                        <i class="bi bi-link-45deg me-1"></i>Demo
+                                    </a>
+                                    {% endif %}
+                                    {% if project.github_url %}
+                                    <a href="{{ project.github_url }}" class="btn btn-outline-light btn-sm me-2" target="_blank">
+                                        <i class="bi bi-github me-1"></i>GitHub
+                                    </a>
+                                    {% endif %}
+                                    <a href="{% url 'projects:project_detail' project.slug %}" class="btn btn-outline-light btn-sm">
+                                        <i class="bi bi-eye me-1"></i>Dettagli
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+            {% endfor %}
+            
+            <!-- Mensaje cuando no hay proyectos -->
+            {% if not projects %}
+            <div class="text-center">
+                <div class="feature bg-primary bg-gradient-primary-to-secondary text-white rounded-3 mb-3 mx-auto" style="width: 4rem; height: 4rem;">
+                    <i class="bi bi-folder-open"></i>
+                </div>
+                <h3 class="fw-bolder">Nessun progetto trovato</h3>
+                <p class="text-muted">I progetti verranno aggiunti presto.</p>
+                {% if request.GET.category %}
+                <a href="{% url 'projects:projects' %}" class="btn btn-primary">
+                    <i class="bi bi-arrow-left me-2"></i>Vedi tutti i progetti
+                </a>
+                {% endif %}
+            </div>
+            {% endif %}
+            
+            <!-- Paginación -->
+            {% if page_obj.has_other_pages %}
+            <nav aria-label="Paginazione progetti" class="mt-5">
+                <ul class="pagination justify-content-center">
+                    {% if page_obj.has_previous %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page=1{% if request.GET.category %}&category={{ request.GET.category }}{% endif %}{% if search_query %}&search={{ search_query }}{% endif %}{% if sort_by %}&sort={{ sort_by }}{% endif %}">
+                                <i class="bi bi-chevron-double-left"></i>
+                            </a>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ page_obj.previous_page_number }}{% if request.GET.category %}&category={{ request.GET.category }}{% endif %}{% if search_query %}&search={{ search_query }}{% endif %}{% if sort_by %}&sort={{ sort_by }}{% endif %}">
+                                <i class="bi bi-chevron-left"></i>
+                            </a>
+                        </li>
+                    {% endif %}
+                    
+                    {% for num in page_obj.paginator.page_range %}
+                        {% if page_obj.number == num %}
+                            <li class="page-item active">
+                                <span class="page-link">{{ num }}</span>
+                            </li>
+                        {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{ num }}{% if request.GET.category %}&category={{ request.GET.category }}{% endif %}{% if search_query %}&search={{ search_query }}{% endif %}{% if sort_by %}&sort={{ sort_by }}{% endif %}">{{ num }}</a>
+                            </li>
+                        {% endif %}
+                    {% endfor %}
+                    
+                    {% if page_obj.has_next %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ page_obj.next_page_number }}{% if request.GET.category %}&category={{ request.GET.category }}{% endif %}{% if search_query %}&search={{ search_query }}{% endif %}{% if sort_by %}&sort={{ sort_by }}{% endif %}">
+                                <i class="bi bi-chevron-right"></i>
+                            </a>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}{% if request.GET.category %}&category={{ request.GET.category }}{% endif %}{% if search_query %}&search={{ search_query }}{% endif %}{% if sort_by %}&sort={{ sort_by }}{% endif %}">
+                                <i class="bi bi-chevron-double-right"></i>
+                            </a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </nav>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %} 

@@ -1,0 +1,42 @@
+<footer class="bg-white py-4 mt-auto">
+    <div class="container px-5">
+        <div class="row align-items-center justify-content-between flex-column flex-sm-row">
+            <div class="col-auto">
+                <div class="small m-0">
+                    {% if site_settings %}{{ site_settings.copyright_text }}{% else %}Copyright © Steve Cardenas Ortiz 2024{% endif %}
+                </div>
+            </div>
+            <div class="col-auto">
+                {% if navigation %}
+                    {% for nav_item in navigation %}
+                        <a class="small" href="{% url nav_item.url_name %}">{{ nav_item.display_name }}</a>
+                        {% if not forloop.last %}<span class="mx-1">&middot;</span>{% endif %}
+                    {% endfor %}
+                {% else %}
+                    <!-- Fallback footer links if no dynamic navigation is set -->
+                    <a class="small" href="{% url 'resume:resume' %}">Resume</a>
+                    <span class="mx-1">&middot;</span>
+                    <a class="small" href="{% url 'projects:projects' %}">Projects</a>
+                    <span class="mx-1">&middot;</span>
+                    <a class="small" href="{% url 'contact:contact' %}">Contact</a>
+                {% endif %}
+            </div>
+        </div>
+        
+        <!-- Social Media -->
+        {% if social_media %}
+        <div class="row mt-3">
+            <div class="col-12 text-center">
+                <div class="social-media-links">
+                    {% for social in social_media %}
+                    <a href="{{ social.url }}" target="_blank" rel="noopener noreferrer" 
+                       class="text-decoration-none me-3" title="{{ social.name }}">
+                        <i class="bi bi-{{ social.icon }} fs-5"></i>
+                    </a>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</footer>

@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+<!-- Header-->
+<header class="py-5">
+    <div class="container px-5 pb-5">
+        <div class="row gx-5 align-items-center">
+            <div class="col-xxl-5">
+                <!-- Header text content-->
+                <div class="text-center text-xxl-start">
+                    {% if home_content %}
+                        <div class="badge bg-gradient-primary-to-secondary text-white mb-4"><div class="text-uppercase">{{ home_content.header_badge }}</div></div>
+                        <div class="fs-3 fw-light text-muted">{{ home_content.header_subtitle }}</div>
+                        <h1 class="display-3 fw-bolder mb-5"><span class="text-gradient d-inline">{{ home_content.header_title }}</span></h1>
+                        <div class="d-grid gap-3 d-sm-flex justify-content-sm-center justify-content-xxl-start mb-3">
+                            <a class="btn btn-primary btn-lg px-5 py-3 me-sm-3 fs-6 fw-bolder" href="{% url 'resume:resume' %}">{{ home_content.resume_button_text }}</a>
+                            <a class="btn btn-outline-dark btn-lg px-5 py-3 fs-6 fw-bolder" href="{% url 'projects:projects' %}">{{ home_content.projects_button_text }}</a>
+                        </div>
+                    {% else %}
+                        <!-- Contenido por defecto si no hay contenido dinámico -->
+                        <div class="badge bg-gradient-primary-to-secondary text-white mb-4"><div class="text-uppercase">Sistemi Embedded &middot; Automazione &middot; IoT</div></div>
+                        <div class="fs-3 fw-light text-muted">Posso aiutare la tua azienda a</div>
+                        <h1 class="display-3 fw-bolder mb-5"><span class="text-gradient d-inline">Crescere e innovare</span></h1>
+                        <div class="d-grid gap-3 d-sm-flex justify-content-sm-center justify-content-xxl-start mb-3">
+                            <a class="btn btn-primary btn-lg px-5 py-3 me-sm-3 fs-6 fw-bolder" href="{% url 'resume:resume' %}">Resume</a>
+                            <a class="btn btn-outline-dark btn-lg px-5 py-3 fs-6 fw-bolder" href="{% url 'projects:projects' %}">Projects</a>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="col-xxl-7">
+                <!-- Header profile picture-->
+                <div class="d-flex justify-content-center mt-5 mt-xxl-0">
+                    <div class="profile bg-gradient-primary-to-secondary">
+                        <!-- TIP: For best results, use a photo with a transparent background like the demo example below-->
+                        <!-- Watch a tutorial on how to do this on YouTube (link)-->
+                        <img class="profile-img" src="{% static 'assets/IMG_9793_foto.PNG' %}" alt="Steve Cardenas Ortiz" />
+                        {% include 'core/partials/dots.html' with dots_class='1' %}
+                        {% include 'core/partials/dots.html' with dots_class='2' %}
+                        {% include 'core/partials/dots.html' with dots_class='3' %}
+                        {% include 'core/partials/dots.html' with dots_class='4' %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<!-- About Section-->
+<section class="bg-light py-5">
+    <div class="container px-5">
+        <div class="row gx-5 justify-content-center">
+            <div class="col-xxl-8">
+                <div class="text-center my-5">
+                    {% if home_content %}
+                        <h2 class="display-5 fw-bolder"><span class="text-gradient d-inline">{{ home_content.about_title }}</span></h2>
+                        <p class="lead fw-light mb-4">{{ home_content.about_subtitle }}</p>
+                        <p class="text-muted">{{ home_content.about_description }}</p>
+                        <div class="d-flex justify-content-center fs-2 gap-4">
+                        </div>
+                    {% else %}
+                        <!-- Contenido por defecto si no hay contenido dinámico -->
+                        <h2 class="display-5 fw-bolder"><span class="text-gradient d-inline">Chi Sono</span></h2>
+                        <p class="lead fw-light mb-4">Mi chiamo Steve Cardenas Ortiz e aiuto le aziende a crescere.</p>
+                        <p class="text-muted">Ingegnere elettronico specializzato in sistemi embedded, automazione industriale e IoT. Con oltre 8 anni di esperienza nello sviluppo di soluzioni elettroniche innovative per diverse industrie.</p>
+                        <div class="d-flex justify-content-center fs-2 gap-4">
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+  
