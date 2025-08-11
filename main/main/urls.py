@@ -25,6 +25,7 @@ urlpatterns = [
     path('resume/', include('resume.urls')),
     path('projects/', include('projects.urls')),
     path('contact/', include('contact.urls')),
+    path('terms/', include('terms.urls')),
 ]
 
 # Configuración para archivos estáticos y media en desarrollo

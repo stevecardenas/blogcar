@@ -12,8 +12,8 @@ class Resume(models.Model):
     updated_at = models.DateTimeField(auto_now=True, verbose_name="Data Aggiornamento")
     
     class Meta:
-        verbose_name = "CV"
-        verbose_name_plural = "CV"
+        verbose_name = "Curriculum Vitae"
+        verbose_name_plural = "Curriculum Vitae"
     
     def __str__(self):
         return f"CV di {self.name}"
@@ -40,8 +40,8 @@ class Experience(models.Model):
     order = models.PositiveIntegerField(default=0, verbose_name="Ordine")
     
     class Meta:
-        verbose_name = "Esperienza"
-        verbose_name_plural = "Esperienze"
+        verbose_name = "Esperienza Lavorativa"
+        verbose_name_plural = "Esperienze Lavorative"
         ordering = ['-order', '-start_date']
     
     def __str__(self):

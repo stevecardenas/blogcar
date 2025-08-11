@@ -23,9 +23,22 @@
             </div>
         </div>
         
+        <!-- Legal Links -->
+        <div class="row mt-3">
+            <div class="col-12 text-center">
+                <div class="legal-links">
+                    <a class="small text-muted" href="{% url 'terms:terms' %}">Termini e Condizioni</a>
+                    <span class="mx-2 text-muted">&middot;</span>
+                    <a class="small text-muted" href="{% url 'terms:privacy' %}">Privacy</a>
+                    <span class="mx-2 text-muted">&middot;</span>
+                    <a class="small text-muted" href="{% url 'terms:cookies' %}">Cookie</a>
+                </div>
+            </div>
+        </div>
+        
         <!-- Social Media -->
         {% if social_media %}
-        <div class="row mt-3">
+        <div class="row mt-2">
             <div class="col-12 text-center">
                 <div class="social-media-links">
                     {% for social in social_media %}

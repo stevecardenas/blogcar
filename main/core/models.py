@@ -13,8 +13,8 @@ class SocialMedia(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     class Meta:
-        verbose_name = "Red Social"
-        verbose_name_plural = "Redes Sociales"
+        verbose_name = "Social Media"
+        verbose_name_plural = "Social Media"
         ordering = ['order', 'name']
         indexes = [
             models.Index(fields=['is_active', 'order']),
@@ -46,8 +46,8 @@ class HomeContent(models.Model):
     updated_at = models.DateTimeField(auto_now=True, verbose_name="Última actualización")
     
     class Meta:
-        verbose_name = "Contenido de la página de inicio"
-        verbose_name_plural = "Contenidos de la página de inicio"
+        verbose_name = "Contenuto della Pagina Iniziale"
+        verbose_name_plural = "Contenuti della Pagina Iniziale"
         ordering = ['-created_at']
     
     def __str__(self):
@@ -73,8 +73,8 @@ class SiteSettings(models.Model):
     updated_at = models.DateTimeField(auto_now=True, verbose_name="Última actualización")
 
     class Meta:
-        verbose_name = "Configuración del sitio"
-        verbose_name_plural = "Configuraciones del sitio"
+        verbose_name = "Impostazioni del Sito"
+        verbose_name_plural = "Impostazioni del Sito"
         ordering = ['-created_at']
         indexes = [
             models.Index(fields=['is_active']),
@@ -99,8 +99,8 @@ class Navigation(models.Model):
     updated_at = models.DateTimeField(auto_now=True, verbose_name="Última actualización")
 
     class Meta:
-        verbose_name = "Enlace de navegación"
-        verbose_name_plural = "Enlaces de navegación"
+        verbose_name = "Elemento di Navigazione"
+        verbose_name_plural = "Elementi di Navigazione"
         ordering = ['order', 'name']
         indexes = [
             models.Index(fields=['is_active', 'order']),

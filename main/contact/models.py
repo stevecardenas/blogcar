@@ -10,8 +10,8 @@ class Contact(models.Model):
     is_read = models.BooleanField(default=False)
     
     class Meta:
-        verbose_name = "Messaggio"
-        verbose_name_plural = "Messaggi"
+        verbose_name = "Messaggio di Contatto"
+        verbose_name_plural = "Messaggi di Contatto"
         ordering = ['-created_at']
     
     def __str__(self):
