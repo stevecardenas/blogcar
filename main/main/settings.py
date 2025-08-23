@@ -187,3 +187,26 @@ else:
     SECURE_HSTS_SECONDS = 0
     SECURE_HSTS_INCLUDE_SUBDOMAINS = False
     SECURE_HSTS_PRELOAD = False
+
+# Email Configuration
+# https://docs.djangoproject.com/en/5.2/topics/email/
+
+# Configuración de email para desarrollo y producción
+EMAIL_BACKEND = env('EMAIL_BACKEND', default='django.core.mail.backends.smtp.EmailBackend')
+EMAIL_HOST = env('EMAIL_HOST', default='smtp.gmail.com')
+EMAIL_PORT = env.int('EMAIL_PORT', default=587)
+EMAIL_USE_TLS = env.bool('EMAIL_USE_TLS', default=True)
+EMAIL_USE_SSL = env.bool('EMAIL_USE_SSL', default=False)
+EMAIL_HOST_USER = env('EMAIL_HOST_USER', default='')
+EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD', default='')
+DEFAULT_FROM_EMAIL = env('DEFAULT_FROM_EMAIL', default=EMAIL_HOST_USER)
+EMAIL_SUBJECT_PREFIX = env('EMAIL_SUBJECT_PREFIX', default='[Portfolio] ')
+
+# Configuración específica para desarrollo
+if DEBUG:
+    # En desarrollo, usar backend de consola para ver emails en terminal
+    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+    print("⚠️  MODO DESARROLLO: Los emails se mostrarán en la consola del servidor")
+else:
+    # En producción, usar SMTP real
+    print("📧 MODO PRODUCCIÓN: Configurando envío de emails reales")
