@@ -1,4 +1,4 @@
-# 🚀 Guía de Despliegue en Render
+# 🚀 Guía de Despliegue en Render (SQLite GRATIS)
 
 ## 📋 Requisitos Previos
 
@@ -13,7 +13,7 @@
 1. **`requirements.txt`** - Dependencias de Python
 2. **`build.sh`** - Script de construcción
 3. **`runtime.txt`** - Versión de Python
-4. **`main/main/settings.py`** - Configurado para producción
+4. **`main/main/settings.py`** - Configurado para producción con SQLite
 
 ## 🚀 Pasos para Desplegar
 
@@ -22,7 +22,7 @@
 ```bash
 # Asegúrate de estar en la rama main
 git add .
-git commit -m "Preparar proyecto para despliegue en Render"
+git commit -m "Preparar proyecto para despliegue en Render con SQLite"
 git push origin main
 ```
 
@@ -45,56 +45,28 @@ Region: Frankfurt (EU Central) [Recomendado]
 Branch: main
 Root Directory: (dejar vacío)
 Build Command: ./build.sh
-Start Command: gunicorn main.main.wsgi:application
+Start Command: ./start.sh
 ```
 
-### **Paso 4: Configurar Variables de Entorno**
+**Alternativa si el comando anterior no funciona:**
+```
+Start Command: gunicorn main.main.wsgi:application --bind 0.0.0.0:$PORT
+```
+
+### **Paso 4: Configurar Variables de Entorno (SOLO 3 variables)**
 
 En la sección **"Environment Variables"** de tu servicio:
 
 ```bash
-# Django Settings
-SECRET_KEY=tu-secret-key-super-segura
+# Django Settings (OBLIGATORIAS)
+SECRET_KEY=w=16hGTv^tV5LAlSN^v&CnPMzOa1d3R8Mr8-%Qy%JZBycDL*EL
 DEBUG=False
 ALLOWED_HOSTS=tu-app.onrender.com
 
-# Database (se configura automáticamente)
-DATABASE_URL=postgresql://... (Render lo proporciona)
-
-# Static Files
-STATIC_URL=/static/
-MEDIA_URL=/media/
-
-# Email Configuration (OPCIONAL - para funcionalidad de contacto)
-EMAIL_BACKEND=django.core.mail.backends.smtp.EmailBackend
-EMAIL_HOST=smtp.gmail.com
-EMAIL_PORT=587
-EMAIL_USE_TLS=True
-EMAIL_HOST_USER=tu-email@gmail.com
-EMAIL_HOST_PASSWORD=tu-app-password
-DEFAULT_FROM_EMAIL=tu-email@gmail.com
-EMAIL_SUBJECT_PREFIX=[Portfolio]
-
-# Production Settings
-SECURE_SSL_REDIRECT=True
-SECURE_HSTS_SECONDS=31536000
-SECURE_HSTS_INCLUDE_SUBDOMAINS=True
-SECURE_HSTS_PRELOAD=True
+# NOTA: NO necesitas DATABASE_URL - se usa SQLite automáticamente
 ```
 
-### **Paso 5: Crear Base de Datos PostgreSQL**
-
-1. **Dashboard** → **"New +"** → **"PostgreSQL"**
-2. **Configure Database:**
-   ```
-   Name: portfolio-db
-   Database: portfolio_db
-   User: portfolio_user
-   Region: Frankfurt (EU Central)
-   ```
-3. **Copiar DATABASE_URL** y agregarla a las variables de entorno
-
-### **Paso 6: Desplegar**
+### **Paso 5: Desplegar**
 
 1. **"Create Web Service"**
 2. Render comenzará el build automáticamente
@@ -105,6 +77,7 @@ SECURE_HSTS_PRELOAD=True
 ### **1. Verificar Build Logs**
 - Revisar que no hay errores en el build
 - Confirmar que las migraciones se ejecutaron
+- Verificar que SQLite se configuró correctamente
 
 ### **2. Verificar la Aplicación**
 - Visitar tu URL: `https://tu-app.onrender.com`
@@ -118,7 +91,7 @@ python main/manage.py createsuperuser
 
 ### **4. Probar Funcionalidades**
 - Navegar por las páginas
-- Probar el formulario de contacto
+- Probar el formulario de contacto (guardará en SQLite)
 - Verificar que los archivos estáticos cargan
 
 ## 🛠️ Solución de Problemas Comunes
@@ -127,17 +100,17 @@ python main/manage.py createsuperuser
 - Verificar que todas las dependencias están en `requirements.txt`
 - Revisar el build log para errores específicos
 
-### **Error: "Database connection failed"**
-- Verificar que `DATABASE_URL` está configurada correctamente
-- Confirmar que la base de datos PostgreSQL está creada
-
 ### **Error: "Static files not found"**
 - Verificar que `STATIC_ROOT` está configurado
 - Confirmar que `collectstatic` se ejecutó en el build
 
 ### **Error: "SECRET_KEY not set"**
 - Agregar `SECRET_KEY` a las variables de entorno
-- Generar una nueva clave secreta
+- Usar la clave generada: `w=16hGTv^tV5LAlSN^v&CnPMzOa1d3R8Mr8-%Qy%JZBycDL*EL`
+
+### **Error: "Database connection failed"**
+- Con SQLite, esto no debería ocurrir
+- Verificar que no hay variables `DATABASE_URL` configuradas
 
 ## 📊 Monitoreo y Mantenimiento
 
@@ -151,7 +124,7 @@ python main/manage.py createsuperuser
 
 ### **Deploy Automático**
 - Cada push a `main` activará un nuevo deploy
-- Configurar ramas específicas si es necesario
+- Los datos de SQLite se reinician en cada deploy (normal para portfolios)
 
 ## 🔒 Seguridad en Producción
 
@@ -165,8 +138,9 @@ python main/manage.py createsuperuser
 - ✅ `SECURE_SSL_REDIRECT=True` - Redirección forzada
 
 ### **Base de Datos**
-- ✅ PostgreSQL con conexión segura
-- ✅ Variables de entorno para credenciales
+- ✅ SQLite para desarrollo y portfolios
+- ✅ No requiere configuración adicional
+- ✅ Completamente gratuito
 
 ## 📈 Optimizaciones
 
@@ -179,13 +153,27 @@ python main/manage.py createsuperuser
 - ✅ Gunicorn como servidor WSGI
 - ✅ Configuración para múltiples workers
 
-## 🎯 Checklist de Despliegue
+## 🎯 Configuración de Emails (OPCIONAL)
+
+Si quieres que funcione el formulario de contacto, agrega estas variables:
+
+```bash
+EMAIL_BACKEND=django.core.mail.backends.smtp.EmailBackend
+EMAIL_HOST=smtp.gmail.com
+EMAIL_PORT=587
+EMAIL_USE_TLS=True
+EMAIL_HOST_USER=tu-email@gmail.com
+EMAIL_HOST_PASSWORD=tu-app-password
+DEFAULT_FROM_EMAIL=tu-email@gmail.com
+EMAIL_SUBJECT_PREFIX=[Portfolio]
+```
+
+## 📋 Checklist de Despliegue
 
 - [ ] Código subido a GitHub
 - [ ] Cuenta en Render creada
 - [ ] Web Service configurado
-- [ ] Base de datos PostgreSQL creada
-- [ ] Variables de entorno configuradas
+- [ ] Variables de entorno configuradas (3 variables)
 - [ ] Build exitoso
 - [ ] Aplicación accesible
 - [ ] Superusuario creado
@@ -198,6 +186,28 @@ python main/manage.py createsuperuser
 - **Admin:** `https://tu-app.onrender.com/admin/`
 - **Contacto:** `https://tu-app.onrender.com/contact/`
 
+## 💰 Costos
+
+- ✅ **Web Service:** GRATIS (hasta 750 horas/mes)
+- ✅ **Base de Datos:** GRATIS (SQLite incluido)
+- ✅ **HTTPS:** GRATIS
+- ✅ **Dominio:** GRATIS (tu-app.onrender.com)
+
+## ⚠️ Limitaciones de SQLite
+
+- Los datos se reinician en cada deploy
+- No es ideal para aplicaciones con muchos usuarios
+- Perfecto para portfolios personales
+- El formulario de contacto guarda temporalmente
+
+## 🎯 Ventajas de esta Configuración
+
+- ✅ **Completamente GRATIS**
+- ✅ **Configuración simple**
+- ✅ **Deploy rápido**
+- ✅ **Perfecto para portfolios**
+- ✅ **No requiere gestión de base de datos**
+
 ---
 
-**¡Tu portfolio estará en línea en minutos! 🎉**
+**¡Tu portfolio estará en línea GRATIS en minutos! 🎉**
