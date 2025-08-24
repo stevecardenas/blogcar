@@ -25,6 +25,14 @@ python manage.py migrate
 echo "Verificando migraciones aplicadas..."
 python manage.py showmigrations
 
+# Crear superusuario automáticamente
+echo "Creando superusuario..."
+echo "from django.contrib.auth import get_user_model; User = get_user_model(); User.objects.create_superuser('admin', 'admin@example.com', 'admin123456') if not User.objects.filter(username='admin').exists() else None" | python manage.py shell
+
+# Verificar que el superusuario se creó
+echo "Verificando superusuario..."
+python manage.py shell -c "from django.contrib.auth import get_user_model; User = get_user_model(); print('Superusuarios:', User.objects.filter(is_superuser=True).count())"
+
 # Recolectar archivos estáticos
 echo "Recolectando archivos estáticos..."
 python manage.py collectstatic --no-input
