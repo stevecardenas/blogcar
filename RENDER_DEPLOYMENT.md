@@ -48,9 +48,21 @@ Build Command: ./build.sh
 Start Command: ./start.sh
 ```
 
-**Alternativa si el comando anterior no funciona:**
+**Si el comando anterior no funciona, prueba estas alternativas:**
+
+**Opción 2 (Recomendada si la primera falla):**
 ```
-Start Command: gunicorn main.main.wsgi:application --bind 0.0.0.0:$PORT
+Start Command: ./start_simple.sh
+```
+
+**Opción 3 (Comando directo):**
+```
+Start Command: cd /opt/render/project/src/main && gunicorn main.wsgi:application --bind 0.0.0.0:$PORT
+```
+
+**Opción 4 (Comando con PYTHONPATH):**
+```
+Start Command: cd /opt/render/project/src && PYTHONPATH=/opt/render/project/src gunicorn main.main.wsgi:application --bind 0.0.0.0:$PORT
 ```
 
 ### **Paso 4: Configurar Variables de Entorno (SOLO 3 variables)**
